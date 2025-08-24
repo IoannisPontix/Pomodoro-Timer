@@ -1,0 +1,1 @@
+TO UPDATE EXE TO NEWEST VERSION run npm run dist on this path with admin priviledge

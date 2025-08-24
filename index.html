@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pomodoro Timer</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="snow-container"></div>
+  <h1>POMODORO TIMER</h1>
+  <div id="settings-button-container">
+    <button id="settings-button">⚙️</button>
+  </div>
+  <div id="app-container">
+    <div id="timer">
+      <div id="settings">
+        <label for="pomodoro-duration">Pomodoro:</label>
+        <input type="number" id="pomodoro-duration" value="25" min="1">
+        <label for="short-break-duration">Short Break:</label>
+        <input type="number" id="short-break-duration" value="5" min="1">
+        <label for="long-break-duration">Long Break:</label>
+        <input type="number" id="long-break-duration" value="15" min="1">
+      </div>
+      <div id="daily-target">
+        <label for="daily-target-hours">Daily Target (hours):</label>
+        <input type="number" id="daily-target-hours" value="8" min="0">
+        <p>Remaining: <span id="remaining-target-time"></span></p>
+      </div>
+      <div id="time">
+        <span id="minutes">25</span>:<span id="seconds">00</span>
+      </div>
+      <div id="progress-bar-container">
+        <div id="progress-bar-fill"></div>
+        <img id="nyan-cat" src="nyan-cat.gif" alt="Nyan Cat">
+      </div>
+      <div id="mode-buttons">
+        <button id="pomodoro-mode">Pomodoro</button>
+        <button id="short-break-mode">Short Break</button>
+        <button id="long-break-mode">Long Break</button>
+      </div>
+      <div id="buttons">
+        <button id="start">Start</button>
+        <button id="reset">Reset</button>
+      </div>
+      <div id="streak">
+        Pomodoro Streak: <span id="pomodoro-streak">0</span>
+      </div>
+    </div>
+    <div id="todo-list-container">
+      <h2>Daily Tasks</h2>
+      <input type="text" id="new-task-input" placeholder="Add a new task...">
+      <button id="add-task-button">Add Task</button>
+      <ul id="task-list"></ul>
+    </div>
+  </div>
+  <div id="settings-modal" class="hidden">
+    <div id="settings-modal-content">
+      <span id="close-settings-modal">&times;</span>
+      <h2>Settings</h2>
+      <div id="language-settings">
+        <h3>Languages</h3>
+        <div id="language-flags">
+          <img class="flag" src="https://flagcdn.com/w40/gb.png" alt="English" data-lang="en">
+          <img class="flag" src="https://flagcdn.com/w40/es.png" alt="Spanish" data-lang="es">
+          <img class="flag" src="https://flagcdn.com/w40/gr.png" alt="Greek" data-lang="el">
+          <img class="flag" src="https://flagcdn.com/w40/vn.png" alt="Vietnamese" data-lang="vi">
+        </div>
+      </div>
+      <div id="fighter-settings">
+        <h3>Choose your fighter</h3>
+        <div id="fighter-selection">
+          <img class="fighter" src="nyan-cat.gif" alt="Nyan Cat" data-fighter="nyan-cat.gif">
+          <img class="fighter" src="nyan-cat-2.gif" alt="Nyan Cat 2" data-fighter="nyan-cat-2.gif">
+          <img class="fighter" src="nyan-cat-3.gif" alt="Nyan Cat 3" data-fighter="nyan-cat-3.gif">
+          <img class="fighter" src="nyan-cat-4.gif" alt="Nyan Cat 4" data-fighter="nyan-cat-4.gif">
+          <img class="fighter" src="nyan-cat-5.gif" alt="Nyan Cat 5" data-fighter="nyan-cat-5.gif">
+        </div>
+      </div>
+      <div id="season-settings">
+        <h3>Season</h3>
+        <div id="season-selection">
+          <button class="season-button" data-season="spring">Spring</button>
+          <button class="season-button" data-season="summer">Summer</button>
+          <button class="season-button" data-season="autumn">Autumn</button>
+          <button class="season-button" data-season="winter">Winter</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+  <footer>
+    Made with ❤️ by Yiannis
+  </footer>
+</body>
+</html>

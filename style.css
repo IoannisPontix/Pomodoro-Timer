@@ -1,0 +1,687 @@
+:root {
+  --pomodoro-bg: #2c3e50; /* Dark Blue/Grey for focus */
+  --short-break-bg: #3498db; /* Light Blue for short break */
+  --long-break-bg: #2ecc71; /* Green for long break */
+}
+
+body {
+  font-family: 'VT323', monospace;
+  display: flex;
+  flex-direction: column; /* Arrange children vertically */
+  align-items: center; /* Center horizontally */
+  min-height: 100vh;
+  background-color: var(--pomodoro-bg);
+  transition: background-color 0.5s ease;
+  font-size: 18px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+body.pomodoro-mode {
+  background-color: var(--pomodoro-bg);
+}
+
+body.short-break-mode {
+  background-color: var(--short-break-bg);
+}
+
+body.long-break-mode {
+  background-color: var(--long-break-bg);
+}
+
+body.spring {
+  background-image: url('https://wallpapercave.com/wp/wp7938247.jpg');
+}
+
+body.summer {
+  background-image: url('https://craftpix.net/wp-content/uploads/2020/06/Free-Nature-Backgrounds-Pixel-Art-7.jpg');
+}
+
+body.autumn {
+  background-image: url('https://craftpix.net/wp-content/uploads/2020/09/4-Free-Autumn-Pixel-Art-Backgrounds-7.jpg');
+}
+
+body.winter {
+  background-image: url('https://img.itch.zone/aW1nLzU5NzIwNzYucG5n/original/d%2B7z%2BI.png');
+}
+
+#snow-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.particle {
+  position: absolute;
+  top: -10%;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.snow-particle {
+  background-color: white;
+  border-radius: 50%;
+  opacity: 0.8;
+  animation-name: snow-fall;
+}
+
+.snow-particle.small {
+  width: 4px;
+  height: 4px;
+}
+
+.snow-particle.medium {
+  width: 8px;
+  height: 8px;
+}
+
+.snow-particle.large {
+  width: 12px;
+  height: 12px;
+}
+
+.flower-particle {
+    width: 15px;
+    height: 15px;
+    background-color: #ffc0cb;
+    clip-path: polygon(50% 0, 65% 25%, 98% 35%, 75% 60%, 85% 95%, 50% 75%, 15% 95%, 25% 60%, 2% 35%, 35% 25%);
+    animation-name: flower-fall;
+}
+
+.sun-flare-particle {
+  width: 100px;
+  height: 100px;
+  background-image: radial-gradient(circle, rgba(255,255,0,0.5) 0%, rgba(255,255,0,0) 70%);
+  border-radius: 50%;
+  animation-name: sun-flare-fall;
+}
+
+.leaf-particle {
+  width: 15px;
+  height: 15px;
+  animation-name: leaf-fall;
+}
+
+.leaf-particle.red {
+  background-color: #c0392b;
+}
+
+.leaf-particle.yellow {
+  background-color: #f1c40f;
+}
+
+.leaf-1 {
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+}
+
+.leaf-2 {
+    clip-path: polygon(0% 0%, 100% 0%, 100% 75%, 50% 100%, 0% 75%);
+}
+
+.leaf-3 {
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+
+h1 {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 40px;
+  color: #eee;
+  margin-bottom: 30px;
+  text-align: center;
+  text-shadow: 4px 4px #000;
+}
+
+#app-container {
+  display: flex;
+  gap: 30px;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+#timer {
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+#settings {
+  margin-bottom: 20px;
+}
+
+#settings label {
+  margin-right: 5px;
+}
+
+#settings input[type="number"] {
+  width: 60px;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin-right: 10px;
+  font-family: 'VT323', monospace;
+  font-size: 16px;
+}
+
+#daily-target {
+  margin-bottom: 20px;
+  font-size: 18px;
+}
+
+#daily-target input[type="number"] {
+  width: 50px;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin-left: 5px;
+  margin-right: 10px;
+  font-family: 'VT323', monospace;
+  font-size: 16px;
+}
+
+#time {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 72px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+#progress-bar-container {
+  width: 100%;
+  height: 60px;
+  background-color: #e0e0e0;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  overflow: hidden;
+  position: relative;
+}
+
+#progress-bar-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(to right, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3);
+  border-radius: 5px;
+}
+
+#nyan-cat {
+  position: absolute;
+  height: 50px;
+  width: auto;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0%;
+  z-index: 1;
+  transition: left 0.9s linear;
+}
+
+#mode-buttons button {
+  background-color: #ddd;
+  color: #333;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin: 0 5px 20px 5px;
+  font-family: 'VT323', monospace;
+}
+
+#mode-buttons button.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+#buttons button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 15px 30px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 20px;
+  margin: 0 10px;
+  font-family: 'VT323', monospace;
+}
+
+#buttons button:hover {
+  background-color: #45a049;
+}
+
+#streak {
+  margin-top: 20px;
+  font-size: 18px;
+  font-weight: normal;
+  color: #eee;
+}
+
+#todo-list-container {
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  width: 300px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+#todo-list-container h2 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 24px;
+  font-family: 'Press Start 2P', cursive;
+  color: #333;
+}
+
+#new-task-input {
+  width: calc(100% - 80px);
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin-right: 5px;
+  font-family: 'VT323', monospace;
+  font-size: 16px;
+}
+
+#add-task-button {
+  padding: 8px 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: 'VT323', monospace;
+  font-size: 16px;
+}
+
+#add-task-button:hover {
+  background-color: #0056b3;
+}
+
+#task-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 20px;
+}
+
+#task-list li {
+  background-color: #f9f9f9;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  text-align: left;
+  word-wrap: break-word;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 18px;
+  font-family: 'VT323', monospace;
+}
+
+#task-list li .task-text {
+  flex-grow: 1;
+}
+
+#task-list li.completed .task-text {
+  text-decoration: line-through;
+  color: #888;
+}
+
+.remove-task-button {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  padding: 5px 8px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-left: 10px;
+  font-family: 'VT323', monospace;
+}
+
+.remove-task-button:hover {
+  background-color: #c82333;
+}
+
+.drag-handle {
+  cursor: move;
+  margin-right: 10px;
+  font-size: 20px;
+}
+
+#task-list li.dragging {
+  opacity: 0.5;
+  background-color: #ddd;
+}
+
+footer {
+  margin-top: 20px;
+  font-size: 16px;
+  color: #eee;
+  font-family: 'VT323', monospace;
+  font-weight: normal;
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 32px;
+    margin-bottom: 20px;
+  }
+
+  #app-container {
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+  }
+
+  #timer,
+  #todo-list-container {
+    width: 90%;
+    max-width: 400px;
+    padding: 15px;
+  }
+
+  #time {
+    font-size: 60px;
+  }
+
+  #settings label,
+  #daily-target label {
+    display: block;
+    text-align: center;
+    margin-bottom: 5px;
+  }
+
+  #settings input[type="number"],
+  #daily-target input[type="number"] {
+    width: 80px;
+    margin: 0 auto 10px auto;
+    display: block;
+  }
+
+  #mode-buttons button,
+  #buttons button {
+    padding: 10px 15px;
+    font-size: 14px;
+    margin: 0 5px 15px 5px;
+  }
+
+  #todo-list-container h2 {
+    font-size: 20px;
+  }
+
+  #new-task-input,
+  #add-task-button {
+    font-size: 14px;
+    padding: 6px;
+  }
+
+  #task-list li {
+    font-size: 16px;
+    padding: 8px;
+  }
+
+  .remove-task-button {
+    font-size: 12px;
+    padding: 4px 6px;
+  }
+
+  footer {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 24px;
+  }
+
+  #time {
+    font-size: 48px;
+  }
+
+  #settings input[type="number"],
+  #daily-target input[type="number"] {
+    width: 60px;
+  }
+
+  #mode-buttons button,
+  #buttons button {
+    font-size: 12px;
+    padding: 8px 10px;
+    margin: 0 3px 10px 3px;
+  }
+
+  #streak {
+    font-size: 16px;
+  }
+
+  #todo-list-container h2 {
+    font-size: 18px;
+  }
+
+  #new-task-input,
+  #add-task-button {
+    font-size: 12px;
+    padding: 5px;
+  }
+
+  #task-list li {
+    font-size: 14px;
+    padding: 6px;
+  }
+
+  .remove-task-button {
+    font-size: 10px;
+    padding: 3px 5px;
+  }
+
+  footer {
+    font-size: 12px;
+  }
+}
+
+#settings-button-container {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+#settings-button {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  cursor: pointer;
+  font-size: 24px;
+  font-family: 'VT323', monospace;
+}
+
+#settings-button:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+#settings-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+#settings-modal.hidden {
+  display: none;
+}
+
+#settings-modal-content {
+  background-color: #f0f0f0;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  position: relative;
+  width: 400px;
+  font-family: 'VT323', monospace;
+}
+
+#close-settings-modal {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+#language-settings h3 {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+#language-flags {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.flag {
+  width: 40px;
+  height: 30px;
+  cursor: pointer;
+  transition: transform 0.2s;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.flag:hover {
+  transform: scale(1.2);
+}
+
+#fighter-settings h3 {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 20px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+#fighter-selection {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.fighter {
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
+  transition: transform 0.2s;
+  border: 2px solid transparent;
+  border-radius: 5px;
+}
+
+.fighter:hover {
+  transform: scale(1.1);
+}
+
+.fighter.selected {
+  border-color: #4CAF50;
+}
+
+#season-settings h3 {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 20px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+#season-selection {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.season-button {
+  background-color: #ddd;
+  color: #333;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-family: 'VT323', monospace;
+}
+
+.season-button.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+@keyframes snow-fall {
+  0% {
+    top: -10%;
+    transform: translateX(0px) rotate(0deg);
+  }
+  100% {
+    top: 110%;
+    transform: translateX(150px) rotate(360deg);
+  }
+}
+
+@keyframes flower-fall {
+  0% {
+    top: -10%;
+    transform: translateX(0px) rotate(0deg);
+  }
+  100% {
+    top: 110%;
+    transform: translateX(100px) rotate(360deg);
+  }
+}
+
+@keyframes leaf-fall {
+  0% {
+    top: -10%;
+    transform: translateX(0px) rotate(0deg);
+  }
+  100% {
+    top: 110%;
+    transform: translateX(-150px) rotate(360deg);
+  }
+}
+
+@keyframes sun-flare-fall {
+  0% {
+    top: -10%;
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.8;
+  }
+  100% {
+    top: 110%;
+    transform: scale(1);
+    opacity: 0.5;
+  }
+}
