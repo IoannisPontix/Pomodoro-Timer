@@ -2,6 +2,12 @@
 
 A retro 8-bit styled desktop Pomodoro timer application built with Electron. This app helps you implement the Pomodoro Technique for improved focus and productivity through timed work and break sessions.
 
+## 📸 Preview
+
+![Pomodoro Timer Screenshot](screenshot.png)
+
+*Experience the nostalgic 8-bit interface with Nyan Cat animations during breaks!*
+
 ## ✨ Features
 
 - **Customizable Timer**: Set your preferred work and break durations
